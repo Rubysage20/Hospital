@@ -23,7 +23,11 @@ public class Clinic {
     private static final DoctorRepository doctorRepo     = new InMemoryDoctorRepository();
     private static final PatientRepository patientRepo   = new InMemoryPatientRepository();
     private static final EmployeeRepository employeeRepo = new InMemoryEmployeeRepository();
-
+ // Milestone II: appointments
+    private static final AppointmentRepository apptRepo =
+            new InMemoryAppointmentRepository();
+    private static final AppointmentScheduler scheduler =
+            new AppointmentScheduler(apptRepo, doctorRepo, patientRepo);
     public static void main(String[] args) {
 
         // ---- Seed Doctors (same names as earlier) ----
@@ -68,6 +72,11 @@ public class Clinic {
                     // Summaries / Exit
                     case "13": showPayrollSummary(); break;
                     case "0": running = false; break;
+                    
+                    case "14": searchPatientsFast(); break;
+                    case "15": scheduleAppointment(); break;
+                    case "16": listAppointments(); break;
+                    
                     default: System.out.println("Invalid option. Please try again.");
                 }
             } catch (Exception ex) {
@@ -386,6 +395,86 @@ public class Clinic {
         System.out.println("TOTAL Employee Payroll: " + money(totalEmp));
         System.out.println("GRAND TOTAL:            " + money(totalDoc + totalEmp));
     }
+    /**
+     * Milestone II: quick exact-last-name search using the secondary index.
+     */
+    private static void searchPatientsFast() {
+        String last = readLine("Enter patient last name: ").trim();
+        if (last.isEmpty()) {
+            System.out.println("(no name entered)");
+            return;
+        }
+        // Uses the indexed method implemented in InMemoryPatientRepository
+        var matches = patientRepo.findAllByLastName(last);
+        if (matches.isEmpty()) {
+            System.out.println("(no matches)");
+            return;
+        }
+        System.out.println("Matches:");
+        for (Patient p : matches) {
+            System.out.printf("- %s %s (ID=%s), PCP=%s%n",
+                    p.getFirstName(), p.getLastName(), p.getUniqueId(),
+                    p.getPrimaryCarePhysician());
+        }
+    }
+
+    /**
+     * Milestone II: schedule a single appointment via AppointmentScheduler.
+     * Enqueues one request and processes immediately with conflict detection.
+     */
+    private static void scheduleAppointment() {
+        System.out.println("=== Schedule Appointment ===");
+        String patientId = readLine("Patient ID: ").trim();
+        String doctorId  = readLine("Doctor ID: ").trim();
+        String startS    = readLine("Start (yyyy-mm-ddThh:mm): ").trim();
+        String endS      = readLine("End   (yyyy-mm-ddThh:mm): ").trim();
+        String prioS     = readLine("Priority [0=LOW,1=NORMAL,2=HIGH,3=CRITICAL, default=1]: ").trim();
+
+        try {
+            var start = java.time.LocalDateTime.parse(startS);
+            var end   = java.time.LocalDateTime.parse(endS);
+            int prio  = prioS.isEmpty() ? 1 : Integer.parseInt(prioS);
+
+            // enqueue one request
+            scheduler.request(patientId, doctorId, start, end, prio);
+
+            // process queue now (could also batch later)
+            var result = scheduler.processAll();
+            System.out.printf("Scheduled: %d, Rejected: %d%n",
+                    result.scheduled.size(), result.rejected.size());
+            if (!result.rejected.isEmpty()) {
+                System.out.println("Rejected requests (conflicts or bad IDs):");
+                for (var r : result.rejected) {
+                    System.out.printf("  patient=%s doctor=%s %s..%s prio=%d%n",
+                            r.patientId, r.doctorId, r.start, r.end, r.priority);
+                }
+            }
+        } catch (Exception ex) {
+            System.out.println("Could not schedule: " + ex.getMessage());
+        }
+    }
+
+    /**
+     * Milestone II: list persisted appointments from the repository.
+     */
+    private static void listAppointments() {
+        var list = apptRepo.findAll();
+        if (list.isEmpty()) {
+            System.out.println("(no appointments)");
+            return;
+        }
+        System.out.println("=== Appointments ===");
+        for (Appointment a : list) {
+            System.out.printf("- %s %s with Dr. %s %s from %s to %s [%s]%n",
+                    a.getPatient().getFirstName(),
+                    a.getPatient().getLastName(),
+                    a.getDoctor().getFirstName(),
+                    a.getDoctor().getLastName(),
+                    a.getStart(),
+                    a.getEnd(),
+                    a.getStatus());
+        }
+    }
 
     // =========================================================================================
     // I/O helpers
@@ -407,6 +496,10 @@ public class Clinic {
         System.out.println("11) Update Employee");
         System.out.println("12) Delete Employee");
         System.out.println("13) Show Payroll Summary");
+     // new Milestone II items:
+        System.out.println("14) Search Patients by Last Name (fast)");
+        System.out.println("15) Schedule Appointment");
+        System.out.println("16) List Appointments");
         System.out.println("0)  Exit");
         System.out.println("====================================");
     }
