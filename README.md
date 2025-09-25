@@ -35,3 +35,28 @@ This branch, **Enhancement 2: Algorithms and Databases**, focuses on improving *
 ---
 
 ## 📂 Project Structure
+HospitalManagementSystem/
+│── src/
+│   ├── models/
+│   │   ├── Patient.java
+│   │   ├── Doctor.java
+│   │   ├── Appointment.java
+│   │   ├── Payroll.java
+│   │   └── Department.java
+│   │
+│   ├── services/
+│   │   ├── PatientService.java        # HashMap-based search
+│   │   ├── AppointmentService.java    # PriorityQueue scheduling
+│   │   ├── PayrollService.java        # Sorting for reporting
+│   │   └── DatabaseService.java       # Database connection & queries
+│   │
+│   ├── utils/
+│   │   └── InputValidator.java
+│   │
+│   └── Main.java                      # Entry point
+│
+│── database/
+│   └── schema.sql                     # SQL file to set up DB
+│
+│── README.md
+│── .gitignore
