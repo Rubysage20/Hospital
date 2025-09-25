@@ -60,3 +60,25 @@ HospitalManagementSystem/
 │
 │── README.md
 │── .gitignore
+
+## 4. Database Setup
+1. Import the `schema.sql` file into MySQL or Oracle.
+2. Update your database credentials in `DatabaseService.java`.
+3. Run the program to connect and test database features.
+
+## 5. Testing the Enhancements
+- **Search Test:** Add 1000+ patient records and test retrieval time.
+- **Scheduling Test:** Create mixed-priority appointments and confirm urgent ones are scheduled first.
+- **Payroll Test:** Generate payroll for 50+ employees and validate sorted output.
+
+## 6. Future Improvements
+- Add predictive scheduling using machine learning.
+- Integrate MongoDB for NoSQL scalability.
+- Implement role-based authentication for database operations.
+- Expand reporting with data visualization dashboards.
+
+## 8. Author
+**Valerie Dawson**  
+- Computer Science Major (SNHU, graduating Oct 2025)  
+- Aspiring Software Engineer | AWS Cloud Practitioner Certified  
+
