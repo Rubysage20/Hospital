@@ -34,7 +34,7 @@ This branch, **Enhancement 2: Algorithms and Databases**, focuses on improving *
 
 ---
 
-## 📂 Project Structure
+## Project Structure
 HospitalManagementSystem/
 │── src/
 │   ├── models/
