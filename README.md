@@ -1,13 +1,13 @@
 # Hospital Management System - Enhancement 2: Algorithms and Databases
 
-## 📌 Project Overview
+##  Project Overview
 The **Hospital Management System (HMS)** is a Java-based application designed to streamline hospital operations such as patient management, appointment scheduling, doctor assignments, and payroll.  
 
 This branch, **Enhancement 2: Algorithms and Databases**, focuses on improving **efficiency and scalability** by optimizing algorithms for core processes and enhancing database interactions.
 
 ---
 
-## 🚀 Key Enhancements
+##  Key Enhancements
 
 ### 🔹 Algorithms
 - **Patient Search Optimization**  
@@ -27,7 +27,7 @@ This branch, **Enhancement 2: Algorithms and Databases**, focuses on improving *
 
 ---
 
-## 🛠️ Tech Stack
+##  Tech Stack
 - **Language:** Java  
 - **Database:** MySQL / Oracle (configurable)  
 - **Tools:** JDBC, Git, GitHub  
