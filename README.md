@@ -34,37 +34,7 @@ This branch, **Enhancement 2: Algorithms and Databases**, focuses on improving *
 
 ---
 
-## Project Structure
-HospitalManagementSystem/
-│── src/
-│   ├── models/
-│   │   ├── Patient.java
-│   │   ├── Doctor.java
-│   │   ├── Appointment.java
-│   │   ├── Payroll.java
-│   │   └── Department.java
-│   │
-│   ├── services/
-│   │   ├── PatientService.java        # HashMap-based search
-│   │   ├── AppointmentService.java    # PriorityQueue scheduling
-│   │   ├── PayrollService.java        # Sorting for reporting
-│   │   └── DatabaseService.java       # Database connection & queries
-│   │
-│   ├── utils/
-│   │   └── InputValidator.java
-│   │
-│   └── Main.java                      # Entry point
-│
-│── database/
-│   └── schema.sql                     # SQL file to set up DB
-│
-│── README.md
-│── .gitignore
 
-## Database Setup
-1. Import the `schema.sql` file into MySQL or Oracle.
-2. Update your database credentials in `DatabaseService.java`.
-3. Run the program to connect and test database features.
 
 ## Testing the Enhancements
 - **Search Test:** Add 1000+ patient records and test retrieval time.
