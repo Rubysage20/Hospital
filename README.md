@@ -9,7 +9,7 @@ This branch, **Enhancement 2: Algorithms and Databases**, focuses on improving *
 
 ##  Key Enhancements
 
-### 🔹 Algorithms
+###  Algorithms
 - **Patient Search Optimization**  
   Implemented **hash maps** for constant-time lookup of patient records.  
 - **Appointment Scheduling**  
@@ -17,7 +17,7 @@ This branch, **Enhancement 2: Algorithms and Databases**, focuses on improving *
 - **Payroll and Reports**  
   Improved **sorting algorithms** to generate organized payroll reports and staff scheduling outputs.
 
-### 🔹 Database
+###  Database
 - **Schema Refinement**  
   Updated schema design to reduce redundancy and improve relational integrity.  
 - **Indexing**  
